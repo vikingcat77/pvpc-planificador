@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Planificador PVPC</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero" aria-labelledby="page-title">
+        <img
+          class="hero-image"
+          src="./assets/pvpc-home-energy.png"
+          alt="Zona domestica con cargador electrico y lavadora"
+        />
+        <div class="hero-shade"></div>
+        <div class="hero-copy">
+          <p class="eyebrow">PVPC · Peninsula, Canarias y Baleares</p>
+          <h1 id="page-title">Planificador PVPC</h1>
+          <p>
+            Consulta el precio por hora y reserva los tramos mas baratos para
+            cargar el coche, poner la lavadora o desplazar consumos grandes.
+          </p>
+        </div>
+      </section>
+
+      <section class="control-band" aria-label="Consulta PVPC">
+        <div class="control-grid">
+          <label class="field">
+            <span>Dia</span>
+            <input id="date-input" type="date" />
+          </label>
+
+          <div class="quick-actions" aria-label="Dias rapidos">
+            <button id="today-button" type="button">Hoy</button>
+            <button id="tomorrow-button" type="button">Manana</button>
+          </div>
+
+          <label class="field">
+            <span>Zona PVPC</span>
+            <select id="zone-input">
+              <option value="PCB">PCB · Peninsula, Baleares y Canarias</option>
+              <option value="CYM">CYM · Ceuta y Melilla</option>
+            </select>
+          </label>
+
+          <button id="refresh-button" class="primary-action" type="button">
+            Actualizar
+          </button>
+        </div>
+
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="summary-grid" aria-label="Resumen diario">
+        <article class="metric">
+          <p>Mas barata</p>
+          <strong id="min-price">--</strong>
+          <span id="min-hour">--</span>
+        </article>
+        <article class="metric">
+          <p>Media</p>
+          <strong id="avg-price">--</strong>
+          <span>del dia consultado</span>
+        </article>
+        <article class="metric">
+          <p>Mas cara</p>
+          <strong id="max-price">--</strong>
+          <span id="max-hour">--</span>
+        </article>
+        <article class="metric accent">
+          <p>Mejor ventana</p>
+          <strong id="best-window">--</strong>
+          <span id="best-window-price">elige duracion</span>
+        </article>
+      </section>
+
+      <section class="planner-layout">
+        <article class="planner-panel" aria-labelledby="planner-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Programacion</p>
+              <h2 id="planner-title">Encuentra la mejor franja</h2>
+            </div>
+          </div>
+
+          <div class="planner-controls">
+            <label class="field">
+              <span>Duracion</span>
+              <input id="duration-input" type="number" min="1" max="8" value="4" />
+            </label>
+            <label class="field">
+              <span>Energia estimada</span>
+              <div class="unit-input">
+                <input id="energy-input" type="number" min="0" step="0.5" value="24" />
+                <span>kWh</span>
+              </div>
+            </label>
+          </div>
+
+          <div class="usecase-grid">
+            <button class="usecase active" type="button" data-hours="4" data-kwh="24">
+              <strong>Coche</strong>
+              <span>4 h · 24 kWh</span>
+            </button>
+            <button class="usecase" type="button" data-hours="2" data-kwh="1.2">
+              <strong>Lavadora</strong>
+              <span>2 h · 1,2 kWh</span>
+            </button>
+            <button class="usecase" type="button" data-hours="3" data-kwh="2.5">
+              <strong>Lavavajillas</strong>
+              <span>3 h · 2,5 kWh</span>
+            </button>
+          </div>
+
+          <div class="recommendation">
+            <p id="recommendation-copy">
+              Carga precios para calcular la mejor franja continua.
+            </p>
+            <strong id="cost-estimate">--</strong>
+          </div>
+
+          <ol id="top-windows" class="window-list" aria-label="Mejores franjas"></ol>
+        </article>
+
+        <article class="chart-panel" aria-labelledby="curve-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Grafico 1</p>
+              <h2 id="curve-title">Curva horaria</h2>
+            </div>
+            <span id="selected-date-label" class="date-chip">--</span>
+          </div>
+          <div id="line-chart" class="line-chart" aria-label="Curva del precio horario"></div>
+        </article>
+      </section>
+
+      <section class="visual-grid">
+        <article class="chart-panel" aria-labelledby="bars-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Grafico 2</p>
+              <h2 id="bars-title">Comparativa por hora</h2>
+            </div>
+          </div>
+          <div id="bar-chart" class="bar-chart" aria-label="Barras de precio horario"></div>
+        </article>
+
+        <article class="chart-panel" aria-labelledby="bands-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Grafico 3</p>
+              <h2 id="bands-title">Mapa de oportunidad</h2>
+            </div>
+          </div>
+          <div id="heatmap" class="heatmap" aria-label="Mapa de horas baratas y caras"></div>
+          <div class="legend">
+            <span><i class="cheap"></i> Mejor tercio</span>
+            <span><i class="mid"></i> Intermedio</span>
+            <span><i class="expensive"></i> Mas caro</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="table-panel" aria-labelledby="table-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Detalle</p>
+            <h2 id="table-title">Precio por tramo</h2>
+          </div>
+          <p>Valores PVPC en EUR/kWh a partir del archivo diario de eSIOS.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Hora</th>
+                <th scope="col">EUR/kWh</th>
+                <th scope="col">Nivel</th>
+              </tr>
+            </thead>
+            <tbody id="price-table"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
