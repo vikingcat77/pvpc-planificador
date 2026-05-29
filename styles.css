@@ -20,6 +20,7 @@
 
 body {
   margin: 0;
+  overflow-x: hidden;
   background:
     linear-gradient(135deg, rgba(15, 118, 110, 0.08), transparent 34rem),
     var(--paper);
@@ -384,7 +385,10 @@ h2 {
 
 .line-chart {
   min-height: 360px;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .line-chart svg {
@@ -438,6 +442,8 @@ h2 {
   align-items: end;
   min-height: 330px;
   overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
   padding-top: 16px;
 }
 
@@ -578,6 +584,27 @@ td {
   font-weight: 800;
 }
 
+.current-hour td {
+  background: rgba(15, 118, 110, 0.08);
+  box-shadow: inset 4px 0 0 var(--teal);
+}
+
+.current-hour td:first-child {
+  color: var(--teal);
+}
+
+.now-label {
+  display: inline-flex;
+  margin-left: 8px;
+  border-radius: 999px;
+  background: var(--teal);
+  color: #f7fffd;
+  padding: 4px 8px;
+  font-size: 0.74rem;
+  font-weight: 900;
+  vertical-align: middle;
+}
+
 .level-pill {
   display: inline-flex;
   border-radius: 999px;
@@ -662,5 +689,25 @@ td {
 
   .heatmap {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .chart-panel {
+    overflow: hidden;
+  }
+
+  .line-chart svg {
+    width: 760px;
+    max-width: none;
+  }
+
+  .bar-chart {
+    grid-template-columns: repeat(24, 34px);
+  }
+
+  .heatmap {
+    grid-template-columns: repeat(6, 116px);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
   }
 }

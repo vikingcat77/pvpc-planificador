@@ -80,6 +80,20 @@ function hourStart(label) {
   return Number(label.split("-")[0]);
 }
 
+function currentMadridHour() {
+  return Number(
+    new Intl.DateTimeFormat("es-ES", {
+      hour: "2-digit",
+      hour12: false,
+      timeZone: MADRID_TIMEZONE,
+    }).format(new Date()),
+  );
+}
+
+function isSelectedDateToday() {
+  return state.selectedDate === madridDate();
+}
+
 function bandFor(index, length) {
   if (index < Math.ceil(length / 3)) {
     return "cheap";
@@ -283,9 +297,13 @@ function labelForBand(band) {
 }
 
 function renderTable(prices) {
+  const activeHour = isSelectedDateToday() ? currentMadridHour() : null;
   elements.priceTable.innerHTML = prices.map((item) => `
-    <tr>
-      <td>${item.hour}</td>
+    <tr class="${item.start === activeHour ? "current-hour" : ""}">
+      <td>
+        <span>${item.hour}</span>
+        ${item.start === activeHour ? `<small class="now-label">Ahora</small>` : ""}
+      </td>
       <td>${formatPrice(item.value)}</td>
       <td><span class="level-pill ${item.band}">${labelForBand(item.band)}</span></td>
     </tr>
