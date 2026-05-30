@@ -33,6 +33,14 @@ const elements = {
   usecases: [...document.querySelectorAll(".usecase")],
 };
 
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch((error) => {
+      console.warn("No se pudo registrar el service worker.", error);
+    });
+  });
+}
+
 function madridDate(offset = 0) {
   const formatter = new Intl.DateTimeFormat("en-CA", {
     timeZone: MADRID_TIMEZONE,
