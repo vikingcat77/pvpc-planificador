@@ -709,6 +709,19 @@ td {
     flex-direction: column;
   }
 
+  .section-heading {
+    align-items: stretch;
+  }
+
+  .table-panel .section-heading {
+    align-items: stretch;
+  }
+
+  .table-panel .section-heading p {
+    max-width: none;
+    text-align: left;
+  }
+
   .heatmap {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }

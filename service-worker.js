@@ -1,4 +1,4 @@
-const CACHE_NAME = "pvpc-planificador-v3";
+const CACHE_NAME = "pvpc-planificador-v4";
 const APP_SHELL = [
   "./",
   "./index.html",
