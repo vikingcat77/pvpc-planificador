@@ -15,6 +15,10 @@ const elements = {
   status: document.querySelector("#status"),
   minPrice: document.querySelector("#min-price"),
   minHour: document.querySelector("#min-hour"),
+  currentPrice: document.querySelector("#current-price"),
+  currentHour: document.querySelector("#current-hour"),
+  nextPrice: document.querySelector("#next-price"),
+  nextHour: document.querySelector("#next-hour"),
   avgPrice: document.querySelector("#avg-price"),
   maxPrice: document.querySelector("#max-price"),
   maxHour: document.querySelector("#max-hour"),
@@ -195,6 +199,25 @@ function renderSummary(prices) {
   elements.selectedDateLabel.textContent = formatSelectedDate(state.selectedDate);
 }
 
+function renderLivePrices(prices) {
+  if (!isSelectedDateToday()) {
+    elements.currentPrice.textContent = "--";
+    elements.currentHour.textContent = "elige hoy para ver la hora actual";
+    elements.nextPrice.textContent = "--";
+    elements.nextHour.textContent = "elige hoy para ver el siguiente tramo";
+    return;
+  }
+
+  const activeHour = currentMadridHour();
+  const current = prices.find((item) => item.start === activeHour);
+  const next = prices.find((item) => item.start === activeHour + 1);
+
+  elements.currentPrice.textContent = current ? formatPrice(current.value) : "--";
+  elements.currentHour.textContent = current ? current.hour : "tramo no disponible";
+  elements.nextPrice.textContent = next ? formatPrice(next.value) : "--";
+  elements.nextHour.textContent = next ? next.hour : "siguiente día";
+}
+
 function renderPlanner(prices) {
   const duration = Math.min(Math.max(Number(elements.durationInput.value) || 1, 1), 8);
   const energy = Math.max(Number(elements.energyInput.value) || 0, 0);
@@ -319,6 +342,7 @@ function renderTable(prices) {
 }
 
 function renderAll(prices) {
+  renderLivePrices(prices);
   renderSummary(prices);
   renderPlanner(prices);
   renderLineChart(prices);
@@ -330,6 +354,10 @@ function renderAll(prices) {
 function renderEmpty(message) {
   elements.minPrice.textContent = "--";
   elements.minHour.textContent = "--";
+  elements.currentPrice.textContent = "--";
+  elements.currentHour.textContent = "sin datos";
+  elements.nextPrice.textContent = "--";
+  elements.nextHour.textContent = "sin datos";
   elements.avgPrice.textContent = "--";
   elements.maxPrice.textContent = "--";
   elements.maxHour.textContent = "--";
