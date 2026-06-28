@@ -331,12 +331,12 @@ function renderTable(prices) {
   const activeHour = isSelectedDateToday() ? currentMadridHour() : null;
   elements.priceTable.innerHTML = prices.map((item) => `
     <tr class="${item.start === activeHour ? "current-hour" : ""}">
-      <td>
+      <td data-label="Hora">
         <span>${item.hour}</span>
         ${item.start === activeHour ? `<small class="now-label">Ahora</small>` : ""}
       </td>
-      <td>${formatPrice(item.value)}</td>
-      <td><span class="level-pill ${item.band}">${labelForBand(item.band)}</span></td>
+      <td data-label="EUR/kWh">${formatPrice(item.value)}</td>
+      <td data-label="Nivel"><span class="level-pill ${item.band}">${labelForBand(item.band)}</span></td>
     </tr>
   `).join("");
 }
@@ -412,6 +412,19 @@ elements.usecases.forEach((button) => {
     elements.durationInput.value = button.dataset.hours;
     elements.energyInput.value = button.dataset.kwh;
     renderPlanner(state.prices);
+  });
+});
+
+document.querySelectorAll(".shortcut-nav a").forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const target = document.getElementById(link.hash.slice(1));
+    if (!target) {
+      return;
+    }
+
+    event.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
+    history.pushState(null, "", link.hash);
   });
 });
 
