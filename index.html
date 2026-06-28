@@ -17,6 +17,29 @@
   </head>
   <body>
     <main class="app-shell">
+      <nav class="shortcut-nav" aria-label="Accesos directos">
+        <a href="#current-prices">
+          <span>Ahora</span>
+          <strong>Precio actual</strong>
+        </a>
+        <a href="#daily-summary">
+          <span>Resumen</span>
+          <strong>Minimos y media</strong>
+        </a>
+        <a href="#planner">
+          <span>Franja</span>
+          <strong>Mejor momento</strong>
+        </a>
+        <a href="#daily-curve">
+          <span>Grafico</span>
+          <strong>Curva diaria</strong>
+        </a>
+        <a href="#hourly-prices">
+          <span>Horas</span>
+          <strong>Precio por hora</strong>
+        </a>
+      </nav>
+
       <section class="hero" aria-labelledby="page-title">
         <img
           class="hero-image"
@@ -34,7 +57,7 @@
         </div>
       </section>
 
-      <section class="control-band" aria-label="Consulta PVPC">
+      <section id="pvpc-query" class="control-band anchor-section" aria-label="Consulta PVPC">
         <div class="control-grid">
           <label class="field">
             <span>Dia</span>
@@ -62,7 +85,7 @@
         <p id="status" class="status" role="status" aria-live="polite"></p>
       </section>
 
-      <section class="live-grid" aria-label="Precio actual">
+      <section id="current-prices" class="live-grid anchor-section" aria-label="Precio actual">
         <article class="metric live-now">
           <p>Ahora</p>
           <strong id="current-price">--</strong>
@@ -75,7 +98,7 @@
         </article>
       </section>
 
-      <section class="summary-grid" aria-label="Resumen diario">
+      <section id="daily-summary" class="summary-grid anchor-section" aria-label="Resumen diario">
         <article class="metric">
           <p>Mas barata</p>
           <strong id="min-price">--</strong>
@@ -98,7 +121,7 @@
         </article>
       </section>
 
-      <section class="planner-layout">
+      <section id="planner" class="planner-layout anchor-section">
         <article class="planner-panel" aria-labelledby="planner-title">
           <div class="section-heading">
             <div>
@@ -146,7 +169,7 @@
           <ol id="top-windows" class="window-list" aria-label="Mejores franjas"></ol>
         </article>
 
-        <article class="chart-panel" aria-labelledby="curve-title">
+        <article id="daily-curve" class="chart-panel anchor-section" aria-labelledby="curve-title">
           <div class="section-heading">
             <div>
               <p class="eyebrow">Grafico 1</p>
@@ -158,7 +181,7 @@
         </article>
       </section>
 
-      <section class="visual-grid">
+      <section class="visual-grid" aria-label="Graficos por hora">
         <article class="chart-panel" aria-labelledby="bars-title">
           <div class="section-heading">
             <div>
@@ -185,11 +208,11 @@
         </article>
       </section>
 
-      <section class="table-panel" aria-labelledby="table-title">
+      <section id="hourly-prices" class="table-panel anchor-section" aria-labelledby="table-title">
         <div class="section-heading">
           <div>
             <p class="eyebrow">Detalle</p>
-            <h2 id="table-title">Precio por tramo</h2>
+            <h2 id="table-title">Precio por hora</h2>
           </div>
           <p>Valores PVPC en EUR/kWh a partir del archivo diario de eSIOS.</p>
         </div>
