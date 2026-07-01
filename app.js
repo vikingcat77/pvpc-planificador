@@ -298,23 +298,36 @@ function renderLineChart(prices) {
 
 function renderBarChart(prices) {
   const max = Math.max(...prices.map((item) => item.value));
-  elements.barChart.innerHTML = prices.map((item) => `
-    <div class="bar" title="${item.hour}: ${formatPrice(item.value)}">
-      <div class="bar-fill ${item.band}" style="height: ${Math.max((item.value / max) * 100, 8)}%">
-        <strong>${item.value.toFixed(3)}</strong>
+  elements.barChart.innerHTML = prices.map((item) => {
+    const barSize = Math.max((item.value / max) * 100, 8);
+    const startHour = item.hour.split("-")[0];
+    return `
+      <div class="bar" title="${item.hour}: ${formatPrice(item.value)}" style="--bar-size: ${barSize}%">
+        <div class="bar-track">
+          <div class="bar-fill ${item.band}">
+            <strong>${item.value.toFixed(3)}</strong>
+          </div>
+        </div>
+        <small>${startHour}h</small>
+        <span class="bar-mobile-value">${item.value.toFixed(3)}</span>
       </div>
-      <small>${item.hour.split("-")[0]}</small>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 }
 
 function renderHeatmap(prices) {
-  elements.heatmap.innerHTML = prices.map((item) => `
-    <div class="heat-cell ${item.band}" title="${item.hour}: ${formatPrice(item.value)}">
-      <small>${item.hour}</small>
-      <strong>${item.value.toFixed(4)}</strong>
-    </div>
-  `).join("");
+  elements.heatmap.innerHTML = prices.map((item) => {
+    const startHour = item.hour.split("-")[0];
+    return `
+      <div class="heat-cell ${item.band}" title="${item.hour}: ${formatPrice(item.value)}">
+        <small>
+          <span class="hour-full">${item.hour}</span>
+          <span class="hour-short">${startHour}h</span>
+        </small>
+        <strong>${item.value.toFixed(4)}</strong>
+      </div>
+    `;
+  }).join("");
 }
 
 function labelForBand(band) {
